@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script></head>
+<body>
+<form id="form1" name="form1" action="login" method="post">
+<table>
+<tr>
+	<td>이메일</td>
+	<td><input type='text' id='user_id' name='user_id' /></td>
+	<td rowspan='2'><input type='button' id='login'  value='로그인' style='height:50px'/></td>
+</tr>
+<tr>
+	<td>비밀번호</td>
+	<td><input type='password' id='user_pw' name='user_pw'/></td>
+</tr>
+</table>
+</form>
+<form id="form2" name = "form2" action="register" method="post">
+<table>
+  <tr>
+    <td>이메일</td>
+    <td><input type = "text" id = 'user_id' name = 'user_id' /></td>
+    <td rowspan='2'><input type='button' id='login' value='로그인' style='height:50px'/></td>
+  </tr>
+  <tr>
+    <td>비밀번호</td>
+    <td><input type = "text" id = 'user_pw' name = 'user_pw' /></td>
+    <td rowspan= '2'><input type = 'button' id = 'password' value='비밀번호' style = 'height:50px'/></td>
+  </tr>
+  <tr>
+    <input type = 'button' id = 'password' value='제출' style = 'height:50px'/>
+  </tr>
+</table>
+</form>
+<div id="message"></div>
+</body>
+</html>
