@@ -11,7 +11,10 @@
     
     <mappers>
         <mapper resource="mapper/member-mapper.xml" />
+<<<<<<< Upstream, based on develop
         <mapper resource="mapper/article-mapper.xml" />
         <mapper resource="mapper/follow-mapper.xml" />
+=======
+>>>>>>> 23404c8 Added setup for mybatis, and added test code of member table
     </mappers>
 </configuration>
