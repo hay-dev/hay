@@ -2,6 +2,7 @@ package com.depromeet.hay;
 
 import static org.junit.Assert.assertEquals;
 
+<<<<<<< Upstream, based on develop
 import com.depromeet.hay.dao.MemberDao;
 import com.depromeet.hay.domain.Member;
 import org.junit.Test;
