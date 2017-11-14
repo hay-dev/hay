@@ -1,10 +1,10 @@
-package com.depromeet.hay.dto;
+package com.depromeet.hay.domain;
 
 import java.util.Date;
 
 public class Member {
 	
-	private String id;
+	private int id;
 	private String email;
 	private String password;
 	private String name;
@@ -29,12 +29,12 @@ public class Member {
 				this.password != null && target.getPassword() != null &&
 				this.email.equals(target.getEmail()) && this.password.equals(target.getPassword());
 	}
-	
-	public String getId() {
+
+	public int getId() {
 		return id;
 	}
 	
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	

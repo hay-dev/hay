@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		
+<mapper namespace="com.depromeet.hay.mapper.ArticleMapper">
+
+    <insert id="add" parameterType="com.depromeet.hay.dto.Article">
+        INSERT INTO article (title, content, weather, location, author) VALUES (#{title}, #{content}, #{weather}, #{location}, #{author});
+    </insert>
+
+    <select id="get" parameterType="java.lang.Integer" resultType="com.depromeet.hay.dto.Article">
+        SELECT * FROM article WHERE id = #{id};
+    </select>
+    
+    <delete id="deleteAll">
+        DELETE FROM article;
+    </delete>
+</mapper>

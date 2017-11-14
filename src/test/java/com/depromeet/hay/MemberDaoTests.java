@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.depromeet.hay.dao.MemberDao;
-import com.depromeet.hay.dto.Member;
+import com.depromeet.hay.domain.Member;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
