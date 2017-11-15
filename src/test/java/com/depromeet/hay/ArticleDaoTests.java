@@ -2,9 +2,6 @@ package com.depromeet.hay;
 
 import static org.junit.Assert.assertEquals;
 
-<<<<<<< Upstream, based on develop
-import com.depromeet.hay.dao.MemberDao;
-import com.depromeet.hay.domain.Member;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +10,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.depromeet.hay.dao.ArticleDao;
+import com.depromeet.hay.dao.MemberDao;
 import com.depromeet.hay.domain.Article;
+import com.depromeet.hay.domain.Member;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
