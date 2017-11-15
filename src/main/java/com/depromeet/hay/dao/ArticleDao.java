@@ -16,10 +16,6 @@ public class ArticleDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public void setSqlSession(SqlSession sqlSession) {
-		this.sqlSession = sqlSession;
-	}
-	
 	public void add(Article article) {
 		sqlSession.insert(NAMESPACE + "add", article);
 	}

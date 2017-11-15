@@ -16,7 +16,8 @@ public class Article {
 	@Override
 	public boolean equals(Object obj) {
 		Article target = (Article) obj;
-		return title != null && content != null && target.getTitle() != null && target.getContent() != null &&
+		return title != null && content != null && location != null &&
+				target.getTitle() != null && target.getContent() != null && target.getLocation() != null &&
 				title.equals(target.getTitle()) && content.equals(target.getContent()) &&
 				weather == target.getWeather() && location.equals(target.getLocation());
 	}

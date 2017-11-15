@@ -12,10 +12,6 @@ public class MemberService {
 	@Autowired
 	private MemberDao memberDao;
 	
-	public void setMemberDao(MemberDao memberDao) {
-		this.memberDao = memberDao;
-	}
-	
 	public void signUp(Member member) {
 		memberDao.add(member);
 	}

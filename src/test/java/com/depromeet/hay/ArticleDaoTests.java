@@ -2,6 +2,8 @@ package com.depromeet.hay;
 
 import static org.junit.Assert.assertEquals;
 
+import com.depromeet.hay.dao.MemberDao;
+import com.depromeet.hay.domain.Member;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,22 +18,28 @@ import com.depromeet.hay.domain.Article;
 @SpringBootTest
 @Transactional
 public class ArticleDaoTests {
-	
+
 	@Autowired
 	ArticleDao articleDao;
+	@Autowired
+	MemberDao memberDao;
 
 	@Test
 	public void deleteAllAndAddAndGet() {
 		articleDao.deleteAll();
-		
+
+		Member member = new Member("test1234@gmail.com", "test1234");
+		memberDao.add(member);
+
 		Article article = new Article();
 		article.setTitle("제목");
 		article.setContent("내용");
 		article.setWeather(2);
-		article.setAuthor(1);
+		article.setLocation("위치");
+		article.setAuthor(member.getId());
 		articleDao.add(article);
-		
-		Article addedArticle = articleDao.get(1);
+
+		Article addedArticle = articleDao.get(article.getId());
 		assertEquals(article, addedArticle);
 	}
 }

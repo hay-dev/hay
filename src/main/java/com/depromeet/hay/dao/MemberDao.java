@@ -16,10 +16,6 @@ public class MemberDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public void setSqlSession(SqlSession sqlSession) {
-		this.sqlSession = sqlSession;
-	}
-	
 	public int add(Member member) {
 		return sqlSession.insert(NAMESPACE + "add", member);
 	}

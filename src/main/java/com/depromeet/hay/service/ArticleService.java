@@ -12,10 +12,6 @@ public class ArticleService {
 	@Autowired
 	private ArticleDao articleDao;
 	
-	public void setArticleDao(ArticleDao articleDao) {
-		this.articleDao = articleDao;
-	}
-	
 	public void writeArticle(Article article) {
 		articleDao.add(article);
 	}

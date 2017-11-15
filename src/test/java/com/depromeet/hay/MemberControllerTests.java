@@ -30,7 +30,7 @@ public class MemberControllerTests {
 	private MemberService memberService;
 	@InjectMocks
 	private MemberController memberController;
-	
+
 	@Before
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
@@ -40,16 +40,16 @@ public class MemberControllerTests {
 	@Test
 	public void signUp() throws Exception {
 		Member member = new Member();
-		member.setEmail("sbeinone@gmail.com");
+		member.setEmail("testing@gmail.com");
 		member.setPassword("test1234");
-		
+
 		Gson gson = new Gson();
 		String memberJson = gson.toJson(member);
-		
+
 		mockMvc.perform(post("/members")
 			.contentType(MediaType.APPLICATION_JSON).content(memberJson))
 			.andExpect(status().isCreated());
-		
+
 		mockMvc.perform(post("/members")
 			.contentType(MediaType.APPLICATION_JSON).content(memberJson))
 			.andExpect(status().isConflict());

@@ -32,7 +32,7 @@ public class ArticleControllerTests {
 	private ArticleService articleService;
 	@InjectMocks
 	private ArticleController articleController;
-	
+
 	@Before
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
@@ -46,10 +46,10 @@ public class ArticleControllerTests {
 		article.setContent("내용");
 		article.setWeather(2);
 		article.setAuthor(1);
-		
+
 		Gson gson = new Gson();
 		String articleJson = gson.toJson(article);
-		
+
 		mockMvc.perform(post("/articles")
 			.contentType(MediaType.APPLICATION_JSON).content(articleJson))
 			.andExpect(status().isCreated());

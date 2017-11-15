@@ -18,10 +18,6 @@ public class ArticleController {
 	@Autowired
 	private ArticleService articleService;
 	
-	public void setArticleService(ArticleService articleService) {
-		this.articleService = articleService;
-	}
-	
 	@RequestMapping(path = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	public void writeArticle(@RequestBody Article article) {
