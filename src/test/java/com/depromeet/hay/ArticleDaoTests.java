@@ -20,9 +20,9 @@ import com.depromeet.hay.domain.Article;
 public class ArticleDaoTests {
 
 	@Autowired
-	ArticleDao articleDao;
+	private ArticleDao articleDao;
 	@Autowired
-	MemberDao memberDao;
+	private MemberDao memberDao;
 
 	@Test
 	public void deleteAllAndAddAndGet() {

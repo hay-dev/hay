@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.depromeet.hay.domain.Member;
 
+import java.util.List;
+
 @Repository
 @Transactional
 public class MemberDao {
@@ -30,5 +32,9 @@ public class MemberDao {
 	
 	public void deleteAll() {
 		sqlSession.delete(NAMESPACE + "deleteAll");
+	}
+
+	public List<Member> getFollowers(int id) {
+		return sqlSession.selectList(NAMESPACE + "getFollowers", id);
 	}
 }

@@ -1,5 +1,6 @@
 package com.depromeet.hay;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -53,5 +54,11 @@ public class MemberControllerTests {
 		mockMvc.perform(post("/members")
 			.contentType(MediaType.APPLICATION_JSON).content(memberJson))
 			.andExpect(status().isConflict());
+	}
+
+	@Test
+	public void getFollowers() throws Exception {
+		mockMvc.perform(get("/members/1/followers"))
+				.andExpect(status().isOk());
 	}
 }
