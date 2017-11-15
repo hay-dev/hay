@@ -24,8 +24,12 @@ public class MemberDao {
 		return sqlSession.insert(NAMESPACE + "add", member);
 	}
 	
+	public Member get(int id) {
+		return sqlSession.selectOne(NAMESPACE + "getById", id);
+	}
+	
 	public Member get(String email) {
-		return sqlSession.selectOne(NAMESPACE + "get", email);
+		return sqlSession.selectOne(NAMESPACE + "getByEmail", email);
 	}
 	
 	public void deleteAll() {
