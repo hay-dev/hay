@@ -5,11 +5,11 @@
 		
 <mapper namespace="com.depromeet.hay.mapper.ArticleMapper">
 
-    <insert id="add" parameterType="com.depromeet.hay.dto.Article">
+    <insert id="add" parameterType="com.depromeet.hay.domain.Article">
         INSERT INTO article (title, content, weather, location, author) VALUES (#{title}, #{content}, #{weather}, #{location}, #{author});
     </insert>
 
-    <select id="get" parameterType="java.lang.Integer" resultType="com.depromeet.hay.dto.Article">
+    <select id="get" parameterType="java.lang.Integer" resultType="com.depromeet.hay.domain.Article">
         SELECT * FROM article WHERE id = #{id};
     </select>
     
