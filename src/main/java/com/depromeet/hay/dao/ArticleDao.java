@@ -1,5 +1,7 @@
 package com.depromeet.hay.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,8 +22,14 @@ public class ArticleDao {
 		sqlSession.insert(NAMESPACE + "add", article);
 	}
 	
-	public Article get(int id) {
-		return sqlSession.selectOne(NAMESPACE + "get", id);
+	// 특정 글 하나만 갖고오기 (front로부터 전달받은 id 이용)
+	public Article getArticle(int id) {
+		return sqlSession.selectOne(NAMESPACE + "getArticle", id);
+	}
+	
+	// 전체 글 목록 가져오기
+	public List<Article> getAllArticles() {
+		return sqlSession.selectList(NAMESPACE + "getAllArticles");
 	}
 	
 	public void deleteAll() {

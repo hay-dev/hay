@@ -1,7 +1,10 @@
 package com.depromeet.hay.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,5 +25,16 @@ public class ArticleController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public void writeArticle(@RequestBody Article article) {
 		articleService.writeArticle(article);
+	}
+	
+	@RequestMapping(path = "", method = RequestMethod.GET)
+	public List<Article> getAllArticles() {
+		return this.articleService.getAllArticles();
+	}
+
+	@RequestMapping(path ="/{id}", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	public Article getArticle(@PathVariable int id) {
+		return this.articleService.getArticle(id);
 	}
 }
