@@ -2,8 +2,10 @@ package com.depromeet.hay;
 
 import static org.junit.Assert.assertEquals;
 
-import com.depromeet.hay.dao.FollowDao;
-import com.depromeet.hay.domain.Follow;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +14,10 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.depromeet.hay.dao.FollowDao;
 import com.depromeet.hay.dao.MemberDao;
+import com.depromeet.hay.domain.Follow;
 import com.depromeet.hay.domain.Member;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -79,6 +78,35 @@ public class MemberDaoTests {
 
 		for (int i = 0; i < followers.size(); i++) {
 			assertEquals(followers.get(i).getId(), members.get(i).getId());
+		}
+	}
+
+	@Test
+	public void getFollowings() {
+		memberDao.deleteAll();
+
+		Member member1 = addMember("test1234@gmail.com", "test1234");
+		Member member2 = addMember("test5678@gmail.com", "test5678");
+		Member member3 = addMember("testasdf@gmail.com", "testasdf");
+		Member member4 = addMember("testqwer@gmail.com", "testqwer");
+
+		followDao.add(new Follow(member1.getId(), member2.getId()));
+		followDao.add(new Follow(member1.getId(), member3.getId()));
+		followDao.add(new Follow(member1.getId(), member4.getId()));
+
+		List<Member> members = new ArrayList<>();
+		members.add(member2);
+		members.add(member3);
+		members.add(member4);
+		
+		List<Member> followings = memberDao.getFollowings(member1.getId());
+		
+		Comparator<Member> comparator = Comparator.comparingInt(Member::getId);
+		members.sort(comparator);
+		followings.sort(comparator);
+
+		for (int i = 0; i < followings.size(); i++) {
+			assertEquals(followings.get(i).getId(), members.get(i).getId());
 		}
 	}
 

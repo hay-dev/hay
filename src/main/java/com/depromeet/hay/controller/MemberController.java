@@ -1,17 +1,22 @@
 package com.depromeet.hay.controller;
 
-import com.depromeet.hay.domain.Follow;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.depromeet.hay.domain.Follow;
 import com.depromeet.hay.domain.Member;
 import com.depromeet.hay.service.MemberService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/members")
@@ -36,6 +41,12 @@ public class MemberController {
 	@ResponseStatus(HttpStatus.OK)
 	public List<Member> followers(@PathVariable int id) {
     	return memberService.getFollowers(id);
+	}
+
+    @RequestMapping(value = "/{id}/followings", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	public List<Member> followings(@PathVariable int id) {
+    	return memberService.getFollowings(id);
 	}
 
 

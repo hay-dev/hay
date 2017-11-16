@@ -25,4 +25,9 @@
         SELECT m.* FROM member AS m INNER JOIN follow AS f ON m.id = f.follower
         WHERE f.following = #{id};
     </select>
+
+    <select id="getFollowings" parameterType="java.lang.Integer" resultType="com.depromeet.hay.domain.Member">
+        SELECT m.* FROM member AS m INNER JOIN follow AS f ON m.id = f.following
+        WHERE f.follower = #{id};
+    </select>
 </mapper>

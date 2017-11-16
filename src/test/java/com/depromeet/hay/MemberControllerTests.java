@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.depromeet.hay.controller.MemberController;
@@ -44,21 +45,26 @@ public class MemberControllerTests {
 		member.setEmail("testing@gmail.com");
 		member.setPassword("test1234");
 
-		Gson gson = new Gson();
-		String memberJson = gson.toJson(member);
+		String memberJson = new Gson().toJson(member);
 
-		mockMvc.perform(post("/members")
-			.contentType(MediaType.APPLICATION_JSON).content(memberJson))
-			.andExpect(status().isCreated());
-
-		mockMvc.perform(post("/members")
-			.contentType(MediaType.APPLICATION_JSON).content(memberJson))
-			.andExpect(status().isConflict());
+		mockMvc.perform(post("/members").contentType(MediaType.APPLICATION_JSON).content(memberJson))
+				.andExpect(status().isCreated());
 	}
 
 	@Test
 	public void getFollowers() throws Exception {
-		mockMvc.perform(get("/members/1/followers"))
-				.andExpect(status().isOk());
+		MvcResult result = mockMvc.perform(get("/members/1/followers"))
+				.andExpect(status().isOk())
+				.andReturn();
+		String content = result.getResponse().getContentAsString();
+		
+//		Type listType = new TypeToken<List<Member>>() {}.getType();
+//		List<Member> followers = new Gson().fromJson(content, listType);
+	}
+
+	@Test
+	public void getFollowings() throws Exception {
+		mockMvc.perform(get("/members/1/followings"))
+		.andExpect(status().isOk());
 	}
 }

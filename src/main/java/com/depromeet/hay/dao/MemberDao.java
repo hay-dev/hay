@@ -1,13 +1,13 @@
 package com.depromeet.hay.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.depromeet.hay.domain.Member;
-
-import java.util.List;
 
 @Repository
 @Transactional
@@ -36,5 +36,9 @@ public class MemberDao {
 
 	public List<Member> getFollowers(int id) {
 		return sqlSession.selectList(NAMESPACE + "getFollowers", id);
+	}
+
+	public List<Member> getFollowings(int id) {
+		return sqlSession.selectList(NAMESPACE + "getFollowings", id);
 	}
 }
