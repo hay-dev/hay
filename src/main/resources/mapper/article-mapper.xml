@@ -17,6 +17,10 @@
     	SELECT * FROM article;
     </select>
     
+    <delete id="deleteArticle" parameterType="java.lang.Integer">
+    	DELETE FROM article WHERE id = #{id};
+    </delete>
+    
     <delete id="deleteAll">
         DELETE FROM article;
     </delete>

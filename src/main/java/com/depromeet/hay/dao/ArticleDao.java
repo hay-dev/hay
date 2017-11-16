@@ -35,4 +35,8 @@ public class ArticleDao {
 	public void deleteAll() {
 		sqlSession.delete(NAMESPACE + "deleteAll");
 	}
+
+	public void deleteArticle(int id) {
+		sqlSession.delete(NAMESPACE + "deleteArticle", id);
+	}
 }
