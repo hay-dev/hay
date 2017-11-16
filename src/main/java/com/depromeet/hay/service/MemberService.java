@@ -22,6 +22,10 @@ public class MemberService {
 		memberDao.add(member);
 	}
 
+	public List<Member> search(String text) {
+		return memberDao.find(text);
+	}
+
 	public void follow(Follow follow) {
 		followDao.add(follow);
 	}

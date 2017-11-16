@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,6 +31,12 @@ public class MemberController {
     public void signUp(@RequestBody Member member) {
 		memberService.signUp(member);
     }
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	public List<Member> search(@RequestParam("search") String text) {
+    	return memberService.search(text);
+	}
 
 	@RequestMapping(value = "/{id}/follows/{followingId}", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
@@ -60,6 +67,6 @@ public class MemberController {
 
     // 존재하지 않는 회원을 팔로우했을 때
 	@ExceptionHandler(value = DataIntegrityViolationException.class)
-	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public void dataIntegrityViolationExceptionHandler() {}
 }

@@ -36,8 +36,8 @@ public class MemberDaoTests {
 		Member member1 = addMember("test1234@gmail.com", "test1234");
 		Member member2 = addMember("testasdf@gmail.com", "testasdf");
 
-		Member addedMember1 = memberDao.get(member1.getEmail());
-		Member addedMember2 = memberDao.get(member2.getEmail());
+		Member addedMember1 = memberDao.get(member1.getId());
+		Member addedMember2 = memberDao.get(member2.getId());
 
 		assertEquals(member1, addedMember1);
 		assertEquals(member2, addedMember2);
@@ -52,6 +52,21 @@ public class MemberDaoTests {
 
 		memberDao.add(member1);
 		memberDao.add(member2);
+	}
+
+	@Test
+	public void search() {
+		memberDao.deleteAll();
+		
+		addMember("test1234@gmail.com", "test1234");
+		
+		List<Member> memberList = null;
+		
+		memberList = memberDao.find("test123");
+		assertEquals(memberList.size(), 0);
+		
+		memberList = memberDao.find("test1234");
+		assertEquals(memberList.size(), 1);
 	}
 
 	@Test

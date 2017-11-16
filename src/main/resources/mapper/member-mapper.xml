@@ -9,12 +9,12 @@
         INSERT INTO member (email, password) VALUES (#{email}, #{password});
     </insert>
     
-    <select id="getByEmail" parameterType="java.lang.String" resultType="com.depromeet.hay.domain.Member">
-        SELECT * FROM member WHERE email = #{email};
-    </select>
-    
     <select id="getById" parameterType="java.lang.Integer" resultType="com.depromeet.hay.domain.Member">
         SELECT * FROM member WHERE id = #{id};
+    </select>
+    
+    <select id="getByEmailOrName" parameterType="java.lang.String" resultType="com.depromeet.hay.domain.Member">
+        SELECT * FROM member WHERE (SELECT SUBSTRING_INDEX(email, '@', 1)) = #{email} OR name = #{name};
     </select>
     
     <delete id="deleteAll">

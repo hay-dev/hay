@@ -26,8 +26,8 @@ public class MemberDao {
 		return sqlSession.selectOne(NAMESPACE + "getById", id);
 	}
 	
-	public Member get(String email) {
-		return sqlSession.selectOne(NAMESPACE + "getByEmail", email);
+	public List<Member> find(String text) {
+		return sqlSession.selectList(NAMESPACE + "getByEmailOrName", text);
 	}
 	
 	public void deleteAll() {
