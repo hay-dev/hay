@@ -20,7 +20,7 @@ import com.depromeet.hay.domain.Member;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Transactional
+//@Transactional
 public class ArticleDaoTests {
 
 	@Autowired
@@ -29,10 +29,29 @@ public class ArticleDaoTests {
 	private MemberDao memberDao;
 	
 	@Test
+	public void deleteArticle() {
+		this.articleDao.deleteAll();
+		this.memberDao.deleteAll();
+		
+		Member member = new Member("155231heyyo@gamil.com", "test1234");
+		memberDao.add(member);
+
+		Article article = new Article();
+		article.setTitle("테스트1");
+		article.setContent("작동 좀 해라");
+		article.setWeather(2);
+		article.setLocation("우리 집ㅎㅎ");
+		article.setAuthor(member.getId());
+		this.articleDao.add(article);		
+
+		this.articleDao.deleteArticle(article.getId());
+	}
+	
+	@Test
 	public void addAndGet() {
 		this.articleDao.deleteAll();
 		
-		Member member = new Member("1231heyyo@gamil.com", "test1234");
+		Member member = new Member("166231heyyo@gamil.com", "test1234");
 		memberDao.add(member);
 
 		Article article = new Article();
@@ -52,7 +71,7 @@ public class ArticleDaoTests {
 		articleDao.deleteAll();
 		memberDao.deleteAll();
 
-		Member member = new Member("4123yo@gamil.com", "test1234");
+		Member member = new Member("41723yo@gamil.com", "test1234");
 		memberDao.add(member);
 		
 		Article article = new Article();

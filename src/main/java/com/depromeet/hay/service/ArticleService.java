@@ -26,4 +26,8 @@ public class ArticleService {
 	public List<Article> getAllArticles() {
 		return this.articleDao.getAllArticles(); 
 	}
+
+	public void deleteArticle(int id) {
+		this.articleDao.deleteArticle(id);
+	}
 }

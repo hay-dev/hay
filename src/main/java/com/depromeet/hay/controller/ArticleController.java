@@ -37,4 +37,9 @@ public class ArticleController {
 	public Article getArticle(@PathVariable int id) {
 		return this.articleService.getArticle(id);
 	}
+	
+	@RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+	public void deleteArticle(@PathVariable int id) {
+		this.articleService.deleteArticle(id);
+	}
 }
