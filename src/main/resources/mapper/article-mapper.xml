@@ -9,8 +9,12 @@
         INSERT INTO article (title, content, weather, location, author) VALUES (#{title}, #{content}, #{weather}, #{location}, #{author});
     </insert>
 
-    <select id="get" parameterType="java.lang.Integer" resultType="com.depromeet.hay.domain.Article">
+    <select id="getArticle" parameterType="java.lang.Integer" resultType="com.depromeet.hay.domain.Article">
         SELECT * FROM article WHERE id = #{id};
+    </select>
+    
+    <select id="getAllArticles" resultType="com.depromeet.hay.domain.Article">
+    	SELECT * FROM article;
     </select>
     
     <delete id="deleteAll">

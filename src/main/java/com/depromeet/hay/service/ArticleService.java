@@ -1,5 +1,7 @@
 package com.depromeet.hay.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,15 @@ public class ArticleService {
 	private ArticleDao articleDao;
 	
 	public void writeArticle(Article article) {
-		articleDao.add(article);
+		this.articleDao.add(article);
+	}
+	
+	public Article getArticle(int id) {
+		return this.articleDao.getArticle(id);
+	}
+	
+	// 전체 글 리스트
+	public List<Article> getAllArticles() {
+		return this.articleDao.getAllArticles(); 
 	}
 }
