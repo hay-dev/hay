@@ -10,8 +10,9 @@ public class Article {
 	private Date writeDate;
 	private int weather;
 	private String location;
-	private int like_cnt;
+	private int likeCnt;
 	private int author;
+	private Member member;
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -71,11 +72,11 @@ public class Article {
 	}
 
 	public int getLike_cnt() {
-		return like_cnt;
+		return likeCnt;
 	}
 	
-	public void setLike_cnt(int like_cnt) {
-		this.like_cnt = like_cnt;
+	public void setLike_cnt(int likeCnt) {
+		this.likeCnt = likeCnt;
 	}
 	
 	public int getAuthor() {
@@ -84,5 +85,13 @@ public class Article {
 	
 	public void setAuthor(int author) {
 		this.author = author;
+	}
+	
+	public Member getMember() {
+		return member;
+	}
+	
+	public void setMember(Member member) {
+		this.member = member;
 	}
 }

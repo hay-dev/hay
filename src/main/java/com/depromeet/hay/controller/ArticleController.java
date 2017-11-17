@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.depromeet.hay.dao.MemberDao;
 import com.depromeet.hay.domain.Article;
+import com.depromeet.hay.domain.Member;
 import com.depromeet.hay.service.ArticleService;
 
 @RestController
@@ -36,7 +38,13 @@ public class ArticleController {
 	@RequestMapping(path ="/{id}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	public Article getArticle(@PathVariable int id) {
-		return this.articleService.getArticle(id);
+		Article article = this.articleService.getArticle(id);
+		
+		MemberDao memberDao = new MemberDao();
+		Member member = memberDao.get(id);
+		article.setMember(member);
+		
+		return article;
 	}
 	
 	@RequestMapping(path = "/{id}", method = RequestMethod.PUT)
