@@ -13,5 +13,6 @@
         <mapper resource="mapper/member-mapper.xml" />
         <mapper resource="mapper/article-mapper.xml" />
         <mapper resource="mapper/follow-mapper.xml" />
+        <mapper resource="mapper/comment-mapper.xml" />
     </mappers>
 </configuration>

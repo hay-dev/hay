@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.depromeet.hay.domain.Article;
+import com.depromeet.hay.domain.Comment;
 import com.depromeet.hay.service.ArticleService;
 
 @RestController
@@ -49,5 +51,11 @@ public class ArticleController {
 	@ResponseStatus(HttpStatus.OK)
 	public void deleteArticle(@PathVariable int id) {
 		this.articleService.deleteArticle(id);
+	}
+	
+	@RequestMapping(path = "/{id}/comments", method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.CREATED)
+	public void addComment(@PathVariable int articleId, @RequestParam(value="authorId") int authorId, @RequestBody Comment comment) {
+		this.articleService.addComment(articleId, authorId, comment);
 	}
 }

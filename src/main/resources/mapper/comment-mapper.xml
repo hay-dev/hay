@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		
+<mapper namespace="com.depromeet.hay.mapper.CommentMapper">
+
+    <insert id="addComment" parameterType="com.depromeet.hay.domain.Comment" useGeneratedKeys="true" keyProperty="id">
+    	INSERT INTO comment(author, content, article)
+    	VALUES (#{authorId}, #{content}, #{articleId});
+    </insert>
+
+</mapper>

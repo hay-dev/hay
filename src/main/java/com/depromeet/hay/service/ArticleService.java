@@ -7,13 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.depromeet.hay.dao.ArticleDao;
+import com.depromeet.hay.dao.CommentDao;
+import com.depromeet.hay.dao.MemberDao;
 import com.depromeet.hay.domain.Article;
+import com.depromeet.hay.domain.Comment;
+import com.depromeet.hay.domain.Member;
 
 @Service
 public class ArticleService {
 	
 	@Autowired
 	private ArticleDao articleDao;
+	@Autowired
+	private MemberDao memberDao;
+	@Autowired
+	private CommentDao commentDao;
 	
 	public void writeArticle(Article article) {
 		this.articleDao.add(article);
@@ -34,5 +42,14 @@ public class ArticleService {
 
 	public void modifyArticle(Article article) {
 		this.articleDao.modifyArticle(article);
+	}
+
+	public void addComment(int articleId, int authorId, Comment comment) {
+		Article article = this.articleDao.getArticle(articleId);
+		Member member = this.memberDao.get(authorId);
+		comment.setArticleId(article.getId());
+		comment.setAuthorId(member.getId());
+		
+		this.commentDao.addComment(comment);
 	}
 }
