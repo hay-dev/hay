@@ -37,4 +37,8 @@ public class MemberService {
 	public List<Member> getFollowings(int id) {
 		return memberDao.getFollowings(id);
 	}
+
+	public void modifyMember(Member member) {
+		this.memberDao.modifyMember(member);
+	}
 }

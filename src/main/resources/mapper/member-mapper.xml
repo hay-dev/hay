@@ -17,6 +17,13 @@
         SELECT * FROM member WHERE (SELECT SUBSTRING_INDEX(email, '@', 1)) = #{email} OR name = #{name};
     </select>
     
+    <update id="modifyMember" parameterType="com.depromeet.hay.domain.Member">
+   		UPDATE Member SET
+   			email = #{email},
+   			password = #{password}
+   		WHERE id = #{id}; 
+    </update>
+    
     <delete id="deleteAll">
         DELETE FROM member;
     </delete>

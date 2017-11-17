@@ -56,7 +56,12 @@ public class MemberController {
     	return memberService.getFollowings(id);
 	}
 
-
+    @RequestMapping(path = "/modify/{id}", method = RequestMethod.PUT)
+	@ResponseStatus(HttpStatus.OK)
+    public void modifyMember(@PathVariable int id, @RequestBody Member member) {
+    	memberService.modifyMember(member);
+    }
+    
     /* exception handlers */
 
     // 이미 해당 이메일로 가입한 계정이 있을 때

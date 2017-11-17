@@ -53,6 +53,19 @@ public class MemberDaoTests {
 		memberDao.add(member1);
 		memberDao.add(member2);
 	}
+	
+	@Test 
+	public void modifyMember() {
+		memberDao.deleteAll();
+		
+		Member member1 = addMember("test1234@gmail.com", "test1234");
+		Member member2 = addMember("testasdf@gmail.com", "testasdf");
+
+		member1.setEmail("modify1234@naver.com");
+		memberDao.modifyMember(member1);
+		
+		assertEquals(member1.getEmail(), "modify1234@naver.com");
+	}
 
 	@Test
 	public void search() {
