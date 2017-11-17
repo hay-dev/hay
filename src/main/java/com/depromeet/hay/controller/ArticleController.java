@@ -39,7 +39,7 @@ public class ArticleController {
 		return this.articleService.getArticle(id);
 	}
 	
-	@RequestMapping(path = "/modify/{id}", method = RequestMethod.PUT)
+	@RequestMapping(path = "/{id}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	public void modifyArticle(@PathVariable int id, @RequestBody Article article) {
 		this.articleService.modifyArticle(article);
