@@ -27,6 +27,32 @@ public class ArticleDaoTests {
 	private ArticleDao articleDao;
 	@Autowired
 	private MemberDao memberDao;
+	
+	@Test
+	public void getArticle() {
+		this.articleDao.deleteAll();
+		this.memberDao.deleteAll();
+		
+		Member member = new Member("COMEON!@gamil.com", "test1234");
+		memberDao.add(member);
+
+		// insert 구문
+		Article article = new Article();
+		article.setTitle("안녕하세여");
+		article.setContent("후후");
+		article.setWeather(1);
+		article.setLocation("남극");
+		article.setAuthor(member.getId());		
+		this.articleDao.add(article);
+		
+		Article test = this.articleDao.getArticle(article.getId());
+		
+		// get 할 때 돌려주기 전에 member 삽입
+		Member testMember= this.memberDao.get(test.getAuthor());
+		test.setMember(testMember);
+		
+		assertEquals(test.getMember().getEmail(), member.getEmail());
+	}
 
 	@Test
 	public void modifyArticle() {
