@@ -2,6 +2,7 @@ package com.depromeet.hay;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
@@ -49,6 +50,18 @@ public class MemberControllerTests {
 
 		mockMvc.perform(post("/members").contentType(MediaType.APPLICATION_JSON).content(memberJson))
 				.andExpect(status().isCreated());
+	}
+	
+	@Test
+	public void modifyMember() throws Exception {
+		Member member = new Member();
+		member.setEmail("testing@gmail.com");
+		member.setPassword("test1234");
+
+		String memberJson = new Gson().toJson(member);
+		
+		mockMvc.perform(put("/members/modify/92").contentType(MediaType.APPLICATION_JSON).content(memberJson))
+		.andExpect(status().isOk());
 	}
 
 	@Test

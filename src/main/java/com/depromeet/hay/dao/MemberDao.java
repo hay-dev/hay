@@ -41,4 +41,8 @@ public class MemberDao {
 	public List<Member> getFollowings(int id) {
 		return sqlSession.selectList(NAMESPACE + "getFollowings", id);
 	}
+
+	public void modifyMember(Member member) {
+		sqlSession.update(NAMESPACE + "modifyMember", member);
+	}
 }
