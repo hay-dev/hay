@@ -60,7 +60,7 @@ public class MemberControllerTests {
 
 		String memberJson = new Gson().toJson(member);
 		
-		mockMvc.perform(put("/members/modify/92").contentType(MediaType.APPLICATION_JSON).content(memberJson))
+		mockMvc.perform(put("/members/92").contentType(MediaType.APPLICATION_JSON).content(memberJson))
 		.andExpect(status().isOk());
 	}
 
