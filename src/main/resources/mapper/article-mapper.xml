@@ -17,6 +17,16 @@
     	SELECT * FROM article;
     </select>
     
+    <update id="modifyArticle" parameterType="com.depromeet.hay.domain.Article">
+    	UPDATE Article SET
+    		title = #{title},
+    		content = #{content},
+    		weather = #{weather},
+    		location = #{location},
+    		author = #{author}
+    	WHERE id = #{id};
+    </update>
+    
     <delete id="deleteArticle" parameterType="java.lang.Integer">
     	DELETE FROM article WHERE id = #{id};
     </delete>

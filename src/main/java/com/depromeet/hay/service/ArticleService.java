@@ -1,5 +1,6 @@
 package com.depromeet.hay.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,9 @@ public class ArticleService {
 
 	public void deleteArticle(int id) {
 		this.articleDao.deleteArticle(id);
+	}
+
+	public void modifyArticle(Article article) {
+		this.articleDao.modifyArticle(article);
 	}
 }
