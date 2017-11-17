@@ -38,18 +38,13 @@ public class ArticleController {
 	@RequestMapping(path ="/{id}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	public Article getArticle(@PathVariable int id) {
-		Article article = this.articleService.getArticle(id);
-		
-		MemberDao memberDao = new MemberDao();
-		Member member = memberDao.get(id);
-		article.setMember(member);
-		
-		return article;
+		return this.articleService.getArticle(id);
 	}
 	
 	@RequestMapping(path = "/{id}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	public void modifyArticle(@PathVariable int id, @RequestBody Article article) {
+		article.setId(id);
 		this.articleService.modifyArticle(article);
 	}
 	
