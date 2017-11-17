@@ -1,7 +1,10 @@
 package com.depromeet.hay;
 
+import static org.mockito.Mockito.mock;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
@@ -72,6 +75,28 @@ public class ArticleControllerTests {
 	@Test
 	public void getArticle() throws Exception {
 		mockMvc.perform(get("/articles/1"))
+		.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void modifyArticle() throws Exception {
+		Article article = new Article();
+		article.setTitle("제목");
+		article.setContent("내용");
+		article.setWeather(2);
+		article.setAuthor(1);
+		
+		Gson gson = new Gson();
+		String articleJson = gson.toJson(article);
+		
+		mockMvc.perform(put("/articles/modify/1")
+			.contentType(MediaType.APPLICATION_JSON).content(articleJson))
+			.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void deleteArticle() throws Exception {
+		mockMvc.perform(delete("/articles/1"))
 		.andExpect(status().isOk());
 	}
 }

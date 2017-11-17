@@ -28,6 +28,7 @@ public class ArticleController {
 	}
 	
 	@RequestMapping(path = "", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
 	public List<Article> getAllArticles() {
 		return this.articleService.getAllArticles();
 	}
@@ -39,11 +40,13 @@ public class ArticleController {
 	}
 	
 	@RequestMapping(path = "/modify/{id}", method = RequestMethod.PUT)
+	@ResponseStatus(HttpStatus.OK)
 	public void modifyArticle(@PathVariable int id, @RequestBody Article article) {
 		this.articleService.modifyArticle(article);
 	}
 	
 	@RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+	@ResponseStatus(HttpStatus.OK)
 	public void deleteArticle(@PathVariable int id) {
 		this.articleService.deleteArticle(id);
 	}
