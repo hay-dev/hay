@@ -38,6 +38,11 @@ public class ArticleController {
 		return this.articleService.getArticle(id);
 	}
 	
+	@RequestMapping(path = "/modify/{id}", method = RequestMethod.PUT)
+	public void modifyArticle(@PathVariable int id, @RequestBody Article article) {
+		this.articleService.modifyArticle(article);
+	}
+	
 	@RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
 	public void deleteArticle(@PathVariable int id) {
 		this.articleService.deleteArticle(id);

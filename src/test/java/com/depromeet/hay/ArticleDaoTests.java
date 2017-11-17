@@ -20,13 +20,35 @@ import com.depromeet.hay.domain.Member;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-//@Transactional
+@Transactional
 public class ArticleDaoTests {
 
 	@Autowired
 	private ArticleDao articleDao;
 	@Autowired
 	private MemberDao memberDao;
+
+	@Test
+	public void modifyArticle() {
+		this.articleDao.deleteAll();
+		this.memberDao.deleteAll();
+		
+		Member member = new Member("155231heyyo@gamil.com", "test1234");
+		memberDao.add(member);
+
+		Article article = new Article();
+		article.setTitle("테스트1");
+		article.setContent("작동 좀 해라");
+		article.setWeather(2);
+		article.setLocation("우리 집ㅎㅎ");
+		article.setAuthor(member.getId());
+		this.articleDao.add(article);
+		
+		article.setTitle("수정이용");
+		
+		this.articleDao.modifyArticle(article);
+		assertEquals(article.getTitle(), "수정이용");
+	}
 	
 	@Test
 	public void deleteArticle() {

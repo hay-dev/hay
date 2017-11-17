@@ -1,5 +1,6 @@
 package com.depromeet.hay.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -38,5 +39,9 @@ public class ArticleDao {
 
 	public void deleteArticle(int id) {
 		sqlSession.delete(NAMESPACE + "deleteArticle", id);
+	}
+
+	public void modifyArticle(Article article) {
+		sqlSession.update(NAMESPACE + "modifyArticle", article);
 	}
 }
