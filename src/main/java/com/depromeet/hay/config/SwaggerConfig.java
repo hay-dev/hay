@@ -1,4 +1,4 @@
-package com.depromeet.hay;
+package com.depromeet.hay.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
