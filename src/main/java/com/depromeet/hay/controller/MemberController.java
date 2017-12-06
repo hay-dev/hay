@@ -6,14 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.depromeet.hay.domain.Follow;
 import com.depromeet.hay.domain.Member;
@@ -26,37 +19,37 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    @PostMapping(value = "")
     @ResponseStatus(HttpStatus.CREATED)
     public void signUp(@RequestBody Member member) {
 		memberService.signUp(member);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @GetMapping(value = "")
 	@ResponseStatus(HttpStatus.OK)
 	public List<Member> search(@RequestParam("search") String text) {
     	return memberService.search(text);
 	}
 
-	@RequestMapping(value = "/{id}/follows/{followingId}", method = RequestMethod.POST)
+	@PostMapping(value = "/{id}/follows/{followingId}")
 	@ResponseStatus(HttpStatus.OK)
 	public void follow(@PathVariable int id, @PathVariable int followingId) {
 		memberService.follow(new Follow(id, followingId));
 	}
 
-    @RequestMapping(value = "/{id}/followers", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}/followers")
 	@ResponseStatus(HttpStatus.OK)
 	public List<Member> followers(@PathVariable int id) {
     	return memberService.getFollowers(id);
 	}
 
-    @RequestMapping(value = "/{id}/followings", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}/followings")
 	@ResponseStatus(HttpStatus.OK)
 	public List<Member> followings(@PathVariable int id) {
     	return memberService.getFollowings(id);
 	}
 
-    @RequestMapping(path = "/modify/{id}", method = RequestMethod.PUT)
+    @PutMapping(path = "/modify/{id}")
 	@ResponseStatus(HttpStatus.OK)
     public void modifyMember(@PathVariable int id, @RequestBody Member member) {
     	memberService.modifyMember(member);

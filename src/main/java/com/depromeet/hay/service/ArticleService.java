@@ -11,28 +11,27 @@ import com.depromeet.hay.domain.Article;
 
 @Service
 public class ArticleService {
-	
-	@Autowired
-	private ArticleDao articleDao;
-	
-	public void writeArticle(Article article) {
-		this.articleDao.add(article);
-	}
-	
-	public Article getArticle(int id) {
-		return this.articleDao.getArticle(id);
-	}
-	
-	// 전체 글 리스트
-	public List<Article> getAllArticles() {
-		return this.articleDao.getAllArticles(); 
-	}
 
-	public void deleteArticle(int id) {
-		this.articleDao.deleteArticle(id);
-	}
+    @Autowired
+    private ArticleDao articleDao;
 
-	public void modifyArticle(Article article) {
-		this.articleDao.modifyArticle(article);
-	}
+    public void writeArticle(Article article) {
+        this.articleDao.add(article);
+    }
+
+    public Article getArticle(int id) {
+        return this.articleDao.getArticle(id);
+    }
+
+    public List<Article> getAllArticles() {
+        return this.articleDao.getAllArticles();
+    }
+
+    public void deleteArticle(int id) {
+        this.articleDao.deleteArticle(id);
+    }
+
+    public void modifyArticle(Article article) {
+        this.articleDao.modifyArticle(article);
+    }
 }
