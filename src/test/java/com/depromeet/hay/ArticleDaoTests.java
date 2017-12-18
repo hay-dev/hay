@@ -30,19 +30,19 @@ public class ArticleDaoTests {
 
 	@Test
 	public void modifyArticle() {
-		this.articleDao.deleteAll();
-		this.memberDao.deleteAll();
+		this.articleDao.deleteAllArticles();
+		this.memberDao.deleteAllMembers();
 		
 		Member member = new Member("155231heyyo@gamil.com", "test1234");
-		memberDao.add(member);
+		memberDao.addMember(member);
 
 		Article article = new Article();
 		article.setTitle("테스트1");
 		article.setContent("작동 좀 해라");
 		article.setWeather(2);
 		article.setLocation("우리 집ㅎㅎ");
-		article.setAuthor(member.getId());
-		this.articleDao.add(article);
+		article.setAuthor(member);
+		this.articleDao.addArticle(article);
 		
 		article.setTitle("수정이용");
 		
@@ -52,37 +52,37 @@ public class ArticleDaoTests {
 	
 	@Test
 	public void deleteArticle() {
-		this.articleDao.deleteAll();
-		this.memberDao.deleteAll();
+		this.articleDao.deleteAllArticles();
+		this.memberDao.deleteAllMembers();
 		
 		Member member = new Member("155231heyyo@gamil.com", "test1234");
-		memberDao.add(member);
+		memberDao.addMember(member);
 
 		Article article = new Article();
 		article.setTitle("테스트1");
 		article.setContent("작동 좀 해라");
 		article.setWeather(2);
 		article.setLocation("우리 집ㅎㅎ");
-		article.setAuthor(member.getId());
-		this.articleDao.add(article);		
+		article.setAuthor(member);
+		this.articleDao.addArticle(article);
 
 		this.articleDao.deleteArticle(article.getId());
 	}
 	
 	@Test
 	public void addAndGet() {
-		this.articleDao.deleteAll();
+		this.articleDao.deleteAllArticles();
 		
 		Member member = new Member("166231heyyo@gamil.com", "test1234");
-		memberDao.add(member);
+		memberDao.addMember(member);
 
 		Article article = new Article();
 		article.setTitle("테스트1");
 		article.setContent("작동 좀 해라");
 		article.setWeather(2);
 		article.setLocation("우리 집ㅎㅎ");
-		article.setAuthor(member.getId());
-		this.articleDao.add(article);		
+		article.setAuthor(member);
+		this.articleDao.addArticle(article);
 
 		Article test = this.articleDao.getArticle(article.getId());
 		assertEquals(test.getTitle(), article.getTitle());	
@@ -90,34 +90,52 @@ public class ArticleDaoTests {
 	
 	@Test
 	public void addAndGetAll() {
-		articleDao.deleteAll();
-		memberDao.deleteAll();
+		articleDao.deleteAllArticles();
+		memberDao.deleteAllMembers();
 
 		Member member = new Member("41723yo@gamil.com", "test1234");
-		memberDao.add(member);
+		memberDao.addMember(member);
 		
 		Article article = new Article();
 		article.setTitle("테스트1");
 		article.setContent("작동 좀 해라");
 		article.setWeather(2);
 		article.setLocation("우리 집ㅎㅎ");
-		article.setAuthor(member.getId());
+		article.setAuthor(member);
 		
-		articleDao.add(article);		
+		articleDao.addArticle(article);
 		
 		Article article2 = new Article();
 		article2.setTitle("영어 못 읽냐");
 		article2.setContent("Please work!!");
 		article2.setWeather(1);
 		article2.setLocation("at home");
-		article2.setAuthor(member.getId());
+		article2.setAuthor(member);
 		
-		articleDao.add(article2);				
+		articleDao.addArticle(article2);
 		
 		List<Article> list = this.articleDao.getAllArticles();
 		assertThat(list)
 			.isNotEmpty()
 			.hasSize(2)
 			.contains(article);
+	}
+
+	@Test
+	public void join() {
+		Member member = new Member("asdfdsg@gamil.com", "test1234");
+		memberDao.addMember(member);
+
+		Article article = new Article();
+		article.setTitle("테스트1");
+		article.setContent("작동 좀 해라");
+		article.setWeather(2);
+		article.setLocation("우리 집ㅎㅎ");
+		article.setAuthor(member);
+		int articleId = articleDao.addArticle(article);
+
+		Article resultArticle = articleDao.getArticle(articleId);
+
+		assertEquals(resultArticle.getAuthor().getId(), member.getId());
 	}
 }

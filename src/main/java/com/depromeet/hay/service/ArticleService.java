@@ -16,7 +16,7 @@ public class ArticleService {
     private ArticleDao articleDao;
 
     public void writeArticle(Article article) {
-        this.articleDao.add(article);
+        this.articleDao.addArticle(article);
     }
 
     public Article getArticle(int id) {
@@ -25,6 +25,10 @@ public class ArticleService {
 
     public List<Article> getAllArticles() {
         return this.articleDao.getAllArticles();
+    }
+
+    public Article getRecentArticle() {
+        return this.articleDao.getRecentArticle();
     }
 
     public void deleteArticle(int id) {

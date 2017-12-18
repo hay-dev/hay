@@ -13,18 +13,12 @@ import com.depromeet.hay.domain.Article;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaDelete;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
 
 @Repository
 @Transactional
 public class ArticleDao {
-	
-	public static final String NAMESPACE = "com.depromeet.hay.mapper.ArticleMapper.";
-
-	@Autowired
-	private SqlSession sqlSession;
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -40,16 +34,26 @@ public class ArticleDao {
 	}
 
 	public List<Article> getAllArticles() {
-		CriteriaQuery<Article> criteriaQuery = entityManager.getCriteriaBuilder().createQuery(Article.class);
-		Root<Article> root = criteriaQuery.from(Article.class);
-		criteriaQuery.select(root);
-		return entityManager.createQuery(criteriaQuery).getResultList();
+		CriteriaQuery<Article> criteria = entityManager.getCriteriaBuilder().createQuery(Article.class);
+		Root<Article> root = criteria.from(Article.class);
+		criteria.select(root);
+		return entityManager.createQuery(criteria).getResultList();
+	}
+
+	public Article getRecentArticle() {
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Article> criteria = builder.createQuery(Article.class);
+		Root<Article> root = criteria.from(Article.class);
+		criteria.orderBy(builder.desc(root.get("id")));
+		TypedQuery<Article> query = entityManager.createQuery(criteria.select(root));
+		query.setMaxResults(1);
+		return query.getSingleResult();
 	}
 	
 	public void deleteAllArticles() {
-		CriteriaDelete<Article> criteriaDelete = entityManager.getCriteriaBuilder().createCriteriaDelete(Article.class);
-		criteriaDelete.from(Article.class);
-		entityManager.createQuery(criteriaDelete);
+		CriteriaDelete<Article> criteria = entityManager.getCriteriaBuilder().createCriteriaDelete(Article.class);
+		criteria.from(Article.class);
+		entityManager.createQuery(criteria);
 	}
 
 	public void deleteArticle(int id) {

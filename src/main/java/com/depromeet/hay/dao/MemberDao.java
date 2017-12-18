@@ -2,47 +2,59 @@ package com.depromeet.hay.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.depromeet.hay.domain.Member;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.*;
+
 @Repository
 @Transactional
 public class MemberDao {
+
+	@PersistenceContext
+	private EntityManager entityManager;
 	
-	public static final String NAMESPACE = "com.depromeet.hay.mapper.MemberMapper.";
-	
-	@Autowired
-	private SqlSession sqlSession;
-	
-	public int add(Member member) {
-		return sqlSession.insert(NAMESPACE + "add", member);
+	public int addMember(Member member) {
+		entityManager.persist(member);
+		return member.getId();
 	}
 	
-	public Member get(int id) {
-		return sqlSession.selectOne(NAMESPACE + "getById", id);
+	public Member getMember(int id) {
+		return entityManager.find(Member.class, id);
 	}
 	
-	public List<Member> find(String text) {
-		return sqlSession.selectList(NAMESPACE + "getByEmailOrName", text);
+	public List<Member> findMember(String text) {
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Member> criteria = builder.createQuery(Member.class);
+		Root<Member> root = criteria.from(Member.class);
+		Expression<Integer> startIndex = builder.literal(1);
+		Expression<Integer> endIndex = builder.sum(builder.locate(root.get("email"), "@"), builder.literal(-1));
+		criteria.where(
+				builder.or(
+						builder.equal(builder.substring(root.get("email"), startIndex, endIndex), text),
+						builder.equal(root.get("name"), text)));
+		return entityManager.createQuery(criteria).getResultList();
 	}
 	
-	public void deleteAll() {
-		sqlSession.delete(NAMESPACE + "deleteAll");
+	public int deleteAllMembers() {
+		CriteriaDelete<Member> delete = entityManager.getCriteriaBuilder().createCriteriaDelete(Member.class);
+		Root<Member> root = delete.from(Member.class);
+		return entityManager.createQuery(delete).executeUpdate();
 	}
 
-	public List<Member> getFollowers(int id) {
-		return sqlSession.selectList(NAMESPACE + "getFollowers", id);
-	}
-
-	public List<Member> getFollowings(int id) {
-		return sqlSession.selectList(NAMESPACE + "getFollowings", id);
-	}
+//	public List<Member> getFollowers(int id) {
+//		return entityManager.find(Follow.class, id);
+//	}
+//
+//	public List<Member> getFollowings(int id) {
+//		return sqlSession.selectList(NAMESPACE + "getFollowings", id);
+//	}
 
 	public void modifyMember(Member member) {
-		sqlSession.update(NAMESPACE + "modifyMember", member);
+		entityManager.merge(member);
 	}
 }

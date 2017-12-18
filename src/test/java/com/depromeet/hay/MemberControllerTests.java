@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.google.gson.reflect.TypeToken;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,9 +23,16 @@ import com.depromeet.hay.controller.MemberController;
 import com.depromeet.hay.domain.Member;
 import com.depromeet.hay.service.MemberService;
 import com.google.gson.Gson;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.lang.reflect.Type;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 public class MemberControllerTests {
 
 	private MockMvc mockMvc;
@@ -50,6 +58,13 @@ public class MemberControllerTests {
 
 		mockMvc.perform(post("/members").contentType(MediaType.APPLICATION_JSON).content(memberJson))
 				.andExpect(status().isCreated());
+
+		MvcResult mvcResult = mockMvc.perform(get("/members").param("search", "testing"))
+				.andReturn();
+
+		Type memberListType = new TypeToken<List<Member>>(){}.getType();
+		List<Member> memberList = new Gson().fromJson(mvcResult.getResponse().getContentAsString(), memberListType);
+		assertEquals(memberList.get(0).getEmail(), member.getEmail());
 	}
 	
 	@Test

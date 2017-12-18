@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 
+import com.depromeet.hay.domain.Member;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,11 +53,15 @@ public class ArticleControllerTests {
 
 	@Test
 	public void writeArticle() throws Exception {
+		Member member = new Member();
+		member.setEmail("test@gmail.com");
+		member.setPassword("1234");
+
 		Article article = new Article();
 		article.setTitle("제목");
 		article.setContent("내용");
 		article.setWeather(2);
-		article.setAuthor(1);
+		article.setAuthor(member);
 
 		Gson gson = new Gson();
 		String articleJson = gson.toJson(article);
@@ -80,11 +85,15 @@ public class ArticleControllerTests {
 	
 	@Test
 	public void modifyArticle() throws Exception {
+		Member member = new Member();
+		member.setEmail("test@gmail.com");
+		member.setPassword("1234");
+
 		Article article = new Article();
 		article.setTitle("제목");
 		article.setContent("내용");
 		article.setWeather(2);
-		article.setAuthor(1);
+		article.setAuthor(member);
 		
 		Gson gson = new Gson();
 		String articleJson = gson.toJson(article);

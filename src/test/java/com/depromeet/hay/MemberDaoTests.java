@@ -1,108 +1,108 @@
 package com.depromeet.hay;
 
-import static org.junit.Assert.assertEquals;
+//import com.depromeet.hay.dao.FollowDao;
+import com.depromeet.hay.dao.MemberDao;
+import com.depromeet.hay.domain.Member;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.depromeet.hay.dao.FollowDao;
-import com.depromeet.hay.dao.MemberDao;
-import com.depromeet.hay.domain.Follow;
-import com.depromeet.hay.domain.Member;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
 public class MemberDaoTests {
 
-	@Autowired
-	private MemberDao memberDao;
-	@Autowired
-	private FollowDao followDao;
+    @Autowired
+    private MemberDao memberDao;
+//    @Autowired
+//    private FollowDao followDao;
 
-	@Test
-	public void deleteAllAndAddAndGet() {
-		memberDao.deleteAll();
+    @Test
+    public void deleteAllAndAddAndGet() {
+        memberDao.deleteAllMembers();
 
-		Member member1 = addMember("test1234@gmail.com", "test1234");
-		Member member2 = addMember("testasdf@gmail.com", "testasdf");
+        Member member1 = addMember("test1234@gmail.com", "test1234");
+        Member member2 = addMember("testasdf@gmail.com", "testasdf");
 
-		Member addedMember1 = memberDao.get(member1.getId());
-		Member addedMember2 = memberDao.get(member2.getId());
+        Member addedMember1 = memberDao.getMember(member1.getId());
+        Member addedMember2 = memberDao.getMember(member2.getId());
 
-		assertEquals(member1, addedMember1);
-		assertEquals(member2, addedMember2);
-	}
+        assertEquals(member1, addedMember1);
+        assertEquals(member2, addedMember2);
+    }
 
-	@Test(expected = DuplicateKeyException.class)
-	public void addDuplicatedEmail() {
-		memberDao.deleteAll();
+    @Test(expected = DataIntegrityViolationException.class)
+    public void addDuplicatedEmail() {
+        memberDao.deleteAllMembers();
 
-		Member member1 = addMember("test1234@gmail.com", "test1234");
-		Member member2 = addMember("test1234@gmail.com", "testasdf");
+        Member member1 = addMember("test1234@gmail.com", "test1234");
+        Member member2 = addMember("test1234@gmail.com", "testasdf");
 
-		memberDao.add(member1);
-		memberDao.add(member2);
-	}
-	
-	@Test 
-	public void modifyMember() {
-		memberDao.deleteAll();
-		
-		Member member1 = addMember("test1234@gmail.com", "test1234");
-		Member member2 = addMember("testasdf@gmail.com", "testasdf");
+        memberDao.addMember(member1);
+        memberDao.addMember(member2);
+    }
 
-		member1.setEmail("modify1234@naver.com");
-		memberDao.modifyMember(member1);
-		
-		assertEquals(member1.getEmail(), "modify1234@naver.com");
-	}
+    @Test
+    public void modifyMember() {
+        memberDao.deleteAllMembers();
 
-	@Test
-	public void search() {
-		memberDao.deleteAll();
-		
-		addMember("test1234@gmail.com", "test1234");
-		
-		List<Member> memberList = null;
-		
-		memberList = memberDao.find("test123");
-		assertEquals(memberList.size(), 0);
-		
-		memberList = memberDao.find("test1234");
-		assertEquals(memberList.size(), 1);
-	}
+        Member member1 = addMember("test1234@gmail.com", "test1234");
+        Member member2 = addMember("testasdf@gmail.com", "testasdf");
+
+        member1.setEmail("modify1234@naver.com");
+        memberDao.modifyMember(member1);
+
+        assertEquals(member1.getEmail(), "modify1234@naver.com");
+    }
+
+    @Test
+    public void search() {
+        memberDao.deleteAllMembers();
+
+        Member member = addMember("test1234@gmail.com", "test1234");
+
+        List<Member> memberList = null;
+
+        memberList = memberDao.findMember("test123");
+        assertEquals(memberList.size(), 0);
+
+        memberList = memberDao.findMember("test1234");
+        assertEquals(memberList.size(), 1);
+    }
 
 	@Test
 	public void getFollowers() {
-		memberDao.deleteAll();
+		memberDao.deleteAllMembers();
 
-		Member member1 = addMember("test1234@gmail.com", "test1234");
+		Member member = addMember("test1234@gmail.com", "test1234");
 		Member member2 = addMember("test5678@gmail.com", "test5678");
 		Member member3 = addMember("testasdf@gmail.com", "testasdf");
 		Member member4 = addMember("testqwer@gmail.com", "testqwer");
 
-		followDao.add(new Follow(member2.getId(), member1.getId()));
-		followDao.add(new Follow(member3.getId(), member1.getId()));
-		followDao.add(new Follow(member4.getId(), member1.getId()));
+        member.addFollower(member2);
+        member.addFollower(member3);
+        member.addFollower(member4);
 
 		List<Member> members = new ArrayList<>();
 		members.add(member2);
 		members.add(member3);
 		members.add(member4);
-		members.sort(Comparator.comparingInt(Member::getId));
 
-		List<Member> followers = memberDao.getFollowers(member1.getId());
-		followers.sort(Comparator.comparingInt(Member::getId));
+        List<Member> followers = memberDao.getMember(member.getId()).getFollowers();
+
+        Comparator<Member> comparator = Comparator.comparingInt(Member::getId);
+        members.sort(comparator);
+        followers.sort(comparator);
 
 		for (int i = 0; i < followers.size(); i++) {
 			assertEquals(followers.get(i).getId(), members.get(i).getId());
@@ -111,24 +111,24 @@ public class MemberDaoTests {
 
 	@Test
 	public void getFollowings() {
-		memberDao.deleteAll();
+		memberDao.deleteAllMembers();
 
-		Member member1 = addMember("test1234@gmail.com", "test1234");
+		Member member = addMember("test1234@gmail.com", "test1234");
 		Member member2 = addMember("test5678@gmail.com", "test5678");
 		Member member3 = addMember("testasdf@gmail.com", "testasdf");
 		Member member4 = addMember("testqwer@gmail.com", "testqwer");
 
-		followDao.add(new Follow(member1.getId(), member2.getId()));
-		followDao.add(new Follow(member1.getId(), member3.getId()));
-		followDao.add(new Follow(member1.getId(), member4.getId()));
+        member.addFollower(member2);
+        member.addFollower(member3);
+        member.addFollower(member4);
 
 		List<Member> members = new ArrayList<>();
 		members.add(member2);
 		members.add(member3);
 		members.add(member4);
-		
-		List<Member> followings = memberDao.getFollowings(member1.getId());
-		
+
+		List<Member> followings = memberDao.getMember(member.getId()).getFollowings();
+
 		Comparator<Member> comparator = Comparator.comparingInt(Member::getId);
 		members.sort(comparator);
 		followings.sort(comparator);
@@ -138,9 +138,9 @@ public class MemberDaoTests {
 		}
 	}
 
-	private Member addMember(String email, String password) {
-		Member member = new Member(email, password);
-		memberDao.add(member);
-		return member;
-	}
+    private Member addMember(String email, String password) {
+        Member member = new Member(email, password);
+        memberDao.addMember(member);
+        return member;
+    }
 }

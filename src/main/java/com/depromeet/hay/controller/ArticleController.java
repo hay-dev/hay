@@ -28,6 +28,12 @@ public class ArticleController {
 		return this.articleService.getAllArticles();
 	}
 
+	@GetMapping(path ="/recent")
+	@ResponseStatus(HttpStatus.OK)
+	public Article getRecentArticle() {
+		return this.articleService.getRecentArticle();
+	}
+
 	@GetMapping(path ="/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public Article getArticle(@PathVariable int id) {

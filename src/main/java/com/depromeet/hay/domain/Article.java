@@ -1,5 +1,7 @@
 package com.depromeet.hay.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,7 +10,7 @@ import java.util.Date;
 public class Article {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
     private int id;
 
@@ -18,7 +20,8 @@ public class Article {
     @Column(nullable = false)
     private String content;
 
-    @Column(name = "write_date", nullable = false)
+    @JsonFormat(pattern = "MMM.dd.yyyy", locale = "en")
+    @Column(name = "write_date", nullable = false, insertable = false)
     private Date writeDate;
 
     private int weather;
@@ -29,8 +32,9 @@ public class Article {
     @Column(name = "like_cnt", nullable = false)
     private int likeCnt;
 
-    @Column(nullable = false)
-    private int author;
+    @ManyToOne
+    @JoinColumn(name = "author_id", nullable = false)
+    private Member author;
 
     @Override
     public boolean equals(Object obj) {
@@ -97,11 +101,11 @@ public class Article {
         this.likeCnt = likeCnt;
     }
 
-    public int getAuthor() {
+    public Member getAuthor() {
         return author;
     }
 
-    public void setAuthor(int author) {
+    public void setAuthor(Member author) {
         this.author = author;
     }
 }

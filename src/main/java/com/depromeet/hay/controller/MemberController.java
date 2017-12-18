@@ -8,7 +8,6 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import com.depromeet.hay.domain.Follow;
 import com.depromeet.hay.domain.Member;
 import com.depromeet.hay.service.MemberService;
 
@@ -25,29 +24,23 @@ public class MemberController {
 		memberService.signUp(member);
     }
 
-    @GetMapping(value = "")
+	@GetMapping(value = "")
 	@ResponseStatus(HttpStatus.OK)
 	public List<Member> search(@RequestParam("search") String text) {
-    	return memberService.search(text);
+		return memberService.search(text);
 	}
 
-	@PostMapping(value = "/{id}/follows/{followingId}")
-	@ResponseStatus(HttpStatus.OK)
-	public void follow(@PathVariable int id, @PathVariable int followingId) {
-		memberService.follow(new Follow(id, followingId));
-	}
-
-    @GetMapping(value = "/{id}/followers")
-	@ResponseStatus(HttpStatus.OK)
-	public List<Member> followers(@PathVariable int id) {
-    	return memberService.getFollowers(id);
-	}
-
-    @GetMapping(value = "/{id}/followings")
-	@ResponseStatus(HttpStatus.OK)
-	public List<Member> followings(@PathVariable int id) {
-    	return memberService.getFollowings(id);
-	}
+//    @GetMapping(value = "/{id}/followers")
+//	@ResponseStatus(HttpStatus.OK)
+//	public List<Member> followers(@PathVariable int id) {
+//    	return memberService.getFollowers(id);
+//	}
+//
+//    @GetMapping(value = "/{id}/followings")
+//	@ResponseStatus(HttpStatus.OK)
+//	public List<Member> followings(@PathVariable int id) {
+//    	return memberService.getFollowings(id);
+//	}
 
     @PutMapping(path = "/modify/{id}")
 	@ResponseStatus(HttpStatus.OK)

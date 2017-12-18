@@ -1,16 +1,54 @@
 package com.depromeet.hay.domain;
 
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+@Entity
+@Table(name = "member")
 public class Member {
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = false)
 	private int id;
+
+	@Column(nullable = false, length = 50)
 	private String email;
+
+	@Transient
+	@Column(nullable = false, length = 20)
 	private String password;
+
+	@Column(length = 10)
 	private String name;
+
 	private Date birth;
+
+	@Column(length = 12)
 	private String phone;
+
+	@ManyToMany
+	@JoinTable(
+			name = "Follow",
+			joinColumns = @JoinColumn(name = "following_id"),
+			inverseJoinColumns = @JoinColumn(name = "follower_id")
+	)
+	private List<Member> followings = new ArrayList<>();
+
+	@ManyToMany
+	@JoinTable(
+			name = "Follow",
+			joinColumns = @JoinColumn(name = "follower_id"),
+			inverseJoinColumns = @JoinColumn(name = "following_id")
+	)
+	private List<Member> followers = new ArrayList<>();
+
+	@Column(name = "following_cnt", nullable = false)
 	private int followingCnt;
+
+	@Column(name = "follower_cnt", nullable = false)
 	private int followerCnt;
 	
 	public Member() {
@@ -77,7 +115,31 @@ public class Member {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
+
+	public List<Member> getFollowings() {
+		return followings;
+	}
+
+	public void setFollowings(List<Member> followings) {
+		this.followings = followings;
+	}
+
+	public void addFollowing(Member following) {
+		this.followings.add(following);
+	}
+
+	public List<Member> getFollowers() {
+		return followers;
+	}
+
+	public void setFollowers(List<Member> followers) {
+		this.followers = followers;
+	}
+
+	public void addFollower(Member follower) {
+		this.followers.add(follower);
+	}
+
 	public int getFollowingCnt() {
 		return followingCnt;
 	}
