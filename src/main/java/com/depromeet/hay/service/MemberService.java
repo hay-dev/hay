@@ -22,7 +22,7 @@ public class MemberService {
 	}
 
 	public List<Member> search(String text) {
-		return memberDao.findMember(text);
+		return memberDao.findMembers(text);
 	}
 
 	public void follow(int followerId, int followingId) {

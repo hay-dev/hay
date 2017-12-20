@@ -31,6 +31,14 @@ public class ArticleService {
         return this.articleDao.getRecentArticle();
     }
 
+    public List<Article> searchArticles(String text, int beforeAddedThan) {
+        return this.articleDao.findArticles(text, beforeAddedThan);
+    }
+
+    public List<Article> searchRecentArticles(String text) {
+        return this.articleDao.findArticles(text);
+    }
+
     public void deleteArticle(int id) {
         this.articleDao.deleteArticle(id);
     }

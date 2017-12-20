@@ -21,32 +21,38 @@ public class ArticleController {
 	public void writeArticle(@RequestBody Article article) {
 		articleService.writeArticle(article);
 	}
-	
-	@GetMapping(path = "")
-	@ResponseStatus(HttpStatus.OK)
-	public List<Article> getAllArticles() {
-		return this.articleService.getAllArticles();
-	}
 
-	@GetMapping(path ="/recent")
+	@GetMapping("/recent")
 	@ResponseStatus(HttpStatus.OK)
 	public Article getRecentArticle() {
 		return this.articleService.getRecentArticle();
 	}
 
-	@GetMapping(path ="/{id}")
+	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public Article getArticle(@PathVariable int id) {
 		return this.articleService.getArticle(id);
 	}
+
+	@GetMapping("/search/recent")
+	@ResponseStatus(HttpStatus.OK)
+	public List<Article> searchRecentArticles(@RequestParam("query") String text) {
+		return this.articleService.searchRecentArticles(text);
+	}
+
+	@GetMapping("/search")
+	@ResponseStatus(HttpStatus.OK)
+	public List<Article> searchArticles(@RequestParam("query") String text, @RequestParam("last_id") int beforeAddedThan) {
+		return this.articleService.searchArticles(text, beforeAddedThan);
+	}
 	
-	@PutMapping(path = "/modify/{id}")
+	@PutMapping("/modify/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public void modifyArticle(@PathVariable int id, @RequestBody Article article) {
 		this.articleService.modifyArticle(article);
 	}
 	
-	@DeleteMapping(path = "/{id}")
+	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public void deleteArticle(@PathVariable int id) {
 		this.articleService.deleteArticle(id);
