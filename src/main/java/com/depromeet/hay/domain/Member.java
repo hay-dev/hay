@@ -31,7 +31,7 @@ public class Member {
 
 	@ManyToMany
 	@JoinTable(
-			name = "Follow",
+			name = "follow",
 			joinColumns = @JoinColumn(name = "following_id"),
 			inverseJoinColumns = @JoinColumn(name = "follower_id")
 	)
@@ -39,11 +39,19 @@ public class Member {
 
 	@ManyToMany
 	@JoinTable(
-			name = "Follow",
+			name = "follow",
 			joinColumns = @JoinColumn(name = "follower_id"),
 			inverseJoinColumns = @JoinColumn(name = "following_id")
 	)
 	private List<Member> followers = new ArrayList<>();
+
+	@ManyToMany
+	@JoinTable(
+			name = "like",
+			joinColumns = @JoinColumn(name = "member_id"),
+			inverseJoinColumns = @JoinColumn(name = "article_id")
+	)
+	private List<Article> likings = new ArrayList<>();
 
 	@Column(name = "following_cnt", nullable = false)
 	private int followingCnt;
@@ -138,6 +146,18 @@ public class Member {
 
 	public void addFollower(Member follower) {
 		this.followers.add(follower);
+	}
+
+	public List<Article> getLikings() {
+		return likings;
+	}
+
+	public void setLikings(List<Article> likings) {
+		this.likings = likings;
+	}
+
+	public void addLikings(Article liking) {
+		this.likings.add(liking);
 	}
 
 	public int getFollowingCnt() {

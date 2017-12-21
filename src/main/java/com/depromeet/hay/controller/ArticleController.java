@@ -2,6 +2,7 @@ package com.depromeet.hay.controller;
 
 import java.util.List;
 
+import com.depromeet.hay.domain.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -25,36 +26,46 @@ public class ArticleController {
 	@GetMapping("/recent")
 	@ResponseStatus(HttpStatus.OK)
 	public Article getRecentArticle() {
-		return this.articleService.getRecentArticle();
+		return articleService.getRecentArticle();
 	}
 
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public Article getArticle(@PathVariable int id) {
-		return this.articleService.getArticle(id);
+		return articleService.getArticle(id);
 	}
 
 	@GetMapping("/search/recent")
 	@ResponseStatus(HttpStatus.OK)
 	public List<Article> searchRecentArticles(@RequestParam("query") String text) {
-		return this.articleService.searchRecentArticles(text);
+		List<Article> articles = articleService.searchRecentArticles(text);
+		System.out.println(articles);
+		return articles;
 	}
 
 	@GetMapping("/search")
 	@ResponseStatus(HttpStatus.OK)
 	public List<Article> searchArticles(@RequestParam("query") String text, @RequestParam("last_id") int beforeAddedThan) {
-		return this.articleService.searchArticles(text, beforeAddedThan);
+		List<Article> articles = articleService.searchArticles(text, beforeAddedThan);
+		System.out.println(articles);
+		return articles;
 	}
 	
 	@PutMapping("/modify/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public void modifyArticle(@PathVariable int id, @RequestBody Article article) {
-		this.articleService.modifyArticle(article);
+		articleService.modifyArticle(article);
 	}
 	
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public void deleteArticle(@PathVariable int id) {
-		this.articleService.deleteArticle(id);
+		articleService.deleteArticle(id);
+	}
+
+	@GetMapping("/{id}/likers")
+	@ResponseStatus(HttpStatus.OK)
+	public List<Member> getLikers(@PathVariable int id) {
+		return articleService.getLikers(id);
 	}
 }

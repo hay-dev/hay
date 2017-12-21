@@ -46,14 +46,6 @@ public class MemberDao {
 		return entityManager.createQuery(delete).executeUpdate();
 	}
 
-//	public List<Member> getFollowers(int id) {
-//		return entityManager.find(Follow.class, id);
-//	}
-//
-//	public List<Member> getFollowings(int id) {
-//		return sqlSession.selectList(NAMESPACE + "getFollowings", id);
-//	}
-
 	public void modifyMember(Member member) {
 		entityManager.merge(member);
 	}

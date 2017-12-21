@@ -3,6 +3,7 @@ package com.depromeet.hay.service;
 import java.util.HashMap;
 import java.util.List;
 
+import com.depromeet.hay.domain.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,34 +17,38 @@ public class ArticleService {
     private ArticleDao articleDao;
 
     public void writeArticle(Article article) {
-        this.articleDao.addArticle(article);
+        articleDao.addArticle(article);
     }
 
     public Article getArticle(int id) {
-        return this.articleDao.getArticle(id);
+        return articleDao.getArticle(id);
     }
 
     public List<Article> getAllArticles() {
-        return this.articleDao.getAllArticles();
+        return articleDao.getAllArticles();
     }
 
     public Article getRecentArticle() {
-        return this.articleDao.getRecentArticle();
+        return articleDao.getRecentArticle();
     }
 
     public List<Article> searchArticles(String text, int beforeAddedThan) {
-        return this.articleDao.findArticles(text, beforeAddedThan);
+        return articleDao.findArticles(text, beforeAddedThan);
     }
 
     public List<Article> searchRecentArticles(String text) {
-        return this.articleDao.findArticles(text);
+        return articleDao.findArticles(text);
     }
 
     public void deleteArticle(int id) {
-        this.articleDao.deleteArticle(id);
+        articleDao.deleteArticle(id);
     }
 
     public void modifyArticle(Article article) {
-        this.articleDao.modifyArticle(article);
+        articleDao.modifyArticle(article);
+    }
+
+    public List<Member> getLikers(int id) {
+        return articleDao.getArticle(id).getLikers();
     }
 }

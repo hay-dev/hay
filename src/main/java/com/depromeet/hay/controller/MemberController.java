@@ -2,6 +2,7 @@ package com.depromeet.hay.controller;
 
 import java.util.List;
 
+import com.depromeet.hay.domain.Article;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
@@ -18,35 +19,53 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 
-    @PostMapping(value = "")
+    @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public void signUp(@RequestBody Member member) {
 		memberService.signUp(member);
     }
 
-	@GetMapping(value = "")
+	@GetMapping("")
 	@ResponseStatus(HttpStatus.OK)
 	public List<Member> search(@RequestParam("search") String text) {
 		return memberService.search(text);
 	}
 
-//    @GetMapping(value = "/{id}/followers")
-//	@ResponseStatus(HttpStatus.OK)
-//	public List<Member> followers(@PathVariable int id) {
-//    	return memberService.getFollowers(id);
-//	}
-//
-//    @GetMapping(value = "/{id}/followings")
-//	@ResponseStatus(HttpStatus.OK)
-//	public List<Member> followings(@PathVariable int id) {
-//    	return memberService.getFollowings(id);
-//	}
+	@PostMapping("{id}/follows/{targetId}")
+	@ResponseStatus(HttpStatus.CREATED)
+	public void follow(@PathVariable int id, @PathVariable int targetId) {
+    	memberService.follow(id, targetId);
+	}
 
-    @PutMapping(path = "/modify/{id}")
+    @GetMapping(value = "/{id}/followers")
+	@ResponseStatus(HttpStatus.OK)
+	public List<Member> followers(@PathVariable int id) {
+    	return memberService.getFollowers(id);
+	}
+
+    @GetMapping(value = "/{id}/followings")
+	@ResponseStatus(HttpStatus.OK)
+	public List<Member> followings(@PathVariable int id) {
+    	return memberService.getFollowings(id);
+	}
+
+    @PutMapping("/modify/{id}")
 	@ResponseStatus(HttpStatus.OK)
     public void modifyMember(@PathVariable int id, @RequestBody Member member) {
     	memberService.modifyMember(member);
     }
+
+    @PostMapping("/{id}/likes/{articleId}")
+	@ResponseStatus(HttpStatus.CREATED)
+	public void likeArticle(@PathVariable int id, @PathVariable int articleId) {
+    	memberService.like(id, articleId);
+	}
+
+	@GetMapping("/{id}/likings")
+	@ResponseStatus(HttpStatus.OK)
+	public List<Article> getLikings(@PathVariable int id) {
+    	return memberService.getLikings(id);
+	}
     
     /* exception handlers */
 

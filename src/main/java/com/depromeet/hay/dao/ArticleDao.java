@@ -47,6 +47,23 @@ public class ArticleDao {
         return query.getSingleResult();
     }
 
+    public List<Article> findArticles(String text) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Article> criteria = builder.createQuery(Article.class);
+        Root<Article> root = criteria.from(Article.class);
+
+        String likeExpression = "%" + text + "%";
+        criteria.where(
+                builder.or(
+                        builder.like(root.get("title"), likeExpression),
+                        builder.like(root.get("content"), likeExpression)));
+        criteria.orderBy(builder.desc(root.get("id")));
+
+        TypedQuery<Article> query = entityManager.createQuery(criteria.select(root));
+        query.setMaxResults(5);
+        return query.getResultList();
+    }
+
     public List<Article> findArticles(String text, int beforeAddedThan) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Article> criteria = builder.createQuery(Article.class);
@@ -59,21 +76,10 @@ public class ArticleDao {
                         builder.like(root.get("title"), likeExpression),
                         builder.like(root.get("content"), likeExpression)));
         criteria.orderBy(builder.desc(root.get("id")));
-        return entityManager.createQuery(criteria).getResultList();
-    }
 
-    public List<Article> findArticles(String text) {
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Article> criteria = builder.createQuery(Article.class);
-        Root<Article> root = criteria.from(Article.class);
-
-        String likeExpression = "%" + text + "%";
-        criteria.where(
-                builder.or(
-                        builder.like(root.get("title"), likeExpression),
-                        builder.like(root.get("content"), likeExpression)));
-        criteria.orderBy(builder.desc(root.get("id")));
-        return entityManager.createQuery(criteria).getResultList();
+        TypedQuery<Article> query = entityManager.createQuery(criteria.select(root));
+        query.setMaxResults(5);
+        return query.getResultList();
     }
 
     public void deleteAllArticles() {

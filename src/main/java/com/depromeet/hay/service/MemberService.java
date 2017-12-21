@@ -2,6 +2,8 @@ package com.depromeet.hay.service;
 
 import java.util.List;
 
+import com.depromeet.hay.dao.ArticleDao;
+import com.depromeet.hay.domain.Article;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +16,8 @@ public class MemberService {
 	
 	@Autowired
 	private MemberDao memberDao;
-//	@Autowired
-//	private FollowDao followDao;
+	@Autowired
+	private ArticleDao articleDao;
 	
 	public void signUp(Member member) {
 		memberDao.addMember(member);
@@ -25,21 +27,31 @@ public class MemberService {
 		return memberDao.findMembers(text);
 	}
 
+	public void modifyMember(Member member) {
+		this.memberDao.modifyMember(member);
+	}
+
 	public void follow(int followerId, int followingId) {
 		Member follower = memberDao.getMember(followerId);
 		Member following = memberDao.getMember(followingId);
 		follower.addFollowing(following);
 	}
 
-//	public List<Member> getFollowers(int id) {
-//		return memberDao.getFollowers(id);
-//	}
-//
-//	public List<Member> getFollowings(int id) {
-//		return memberDao.getFollowings(id);
-//	}
+	public List<Member> getFollowers(int id) {
+		return memberDao.getMember(id).getFollowers();
+	}
 
-	public void modifyMember(Member member) {
-		this.memberDao.modifyMember(member);
+	public List<Member> getFollowings(int id) {
+		return memberDao.getMember(id).getFollowings();
+	}
+
+	public void like(int memberId, int articleId) {
+		Member member = memberDao.getMember(memberId);
+		Article article = articleDao.getArticle(articleId);
+		member.addLikings(article);
+	}
+
+	public List<Article> getLikings(int id) {
+		return memberDao.getMember(id).getLikings();
 	}
 }

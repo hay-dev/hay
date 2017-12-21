@@ -3,7 +3,9 @@ package com.depromeet.hay.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "article")
@@ -28,6 +30,14 @@ public class Article {
 
     @Column(length = 50)
     private String location;
+
+    @ManyToMany
+    @JoinTable(
+            name = "like",
+            joinColumns = @JoinColumn(name = "article_id"),
+            inverseJoinColumns = @JoinColumn(name = "member_id")
+    )
+    private List<Member> likers = new ArrayList<>();
 
     @Column(name = "like_cnt", nullable = false)
     private int likeCnt;
@@ -91,6 +101,18 @@ public class Article {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public List<Member> getLikers() {
+        return likers;
+    }
+
+    public void setLikers(List<Member> likers) {
+        this.likers = likers;
+    }
+
+    public void addLiker(Member liker) {
+        this.likers.add(liker);
     }
 
     public int getLikeCnt() {
