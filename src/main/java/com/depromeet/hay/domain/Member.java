@@ -10,7 +10,7 @@ import java.util.List;
 public class Member {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(nullable = false)
 	private int id;
 

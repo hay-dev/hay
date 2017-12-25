@@ -26,6 +26,10 @@ public class Article {
     @Column(name = "write_date", nullable = false, insertable = false)
     private Date writeDate;
 
+    @ManyToOne
+    @JoinColumn(name = "author_id", nullable = false)
+    private Member author;
+
     private int weather;
 
     @Column(length = 50)
@@ -39,12 +43,11 @@ public class Article {
     )
     private List<Member> likers = new ArrayList<>();
 
+    @OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE)
+    private List<Comment> comments = new ArrayList<>();
+
     @Column(name = "like_cnt", nullable = false)
     private int likeCnt;
-
-    @ManyToOne
-    @JoinColumn(name = "author_id", nullable = false)
-    private Member author;
 
     @Override
     public boolean equals(Object obj) {
@@ -87,6 +90,14 @@ public class Article {
         this.writeDate = writeDate;
     }
 
+    public Member getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Member author) {
+        this.author = author;
+    }
+
     public int getWeather() {
         return weather;
     }
@@ -115,19 +126,23 @@ public class Article {
         this.likers.add(liker);
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+    }
+
     public int getLikeCnt() {
         return likeCnt;
     }
 
     public void setLikeCnt(int likeCnt) {
         this.likeCnt = likeCnt;
-    }
-
-    public Member getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(Member author) {
-        this.author = author;
     }
 }

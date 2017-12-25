@@ -1,14 +1,13 @@
 package com.depromeet.hay.service;
 
-import java.util.HashMap;
-import java.util.List;
-
+import com.depromeet.hay.dao.ArticleDao;
+import com.depromeet.hay.domain.Article;
+import com.depromeet.hay.domain.Comment;
 import com.depromeet.hay.domain.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.depromeet.hay.dao.ArticleDao;
-import com.depromeet.hay.domain.Article;
+import java.util.List;
 
 @Service
 public class ArticleService {
@@ -50,5 +49,14 @@ public class ArticleService {
 
     public List<Member> getLikers(int id) {
         return articleDao.getArticle(id).getLikers();
+    }
+
+    public void writeComment(int id, Comment comment) {
+        Article article = articleDao.getArticle(id);
+        article.addComment(comment);
+    }
+
+    public List<Comment> getComments(int id) {
+        return articleDao.getArticle(id).getComments();
     }
 }

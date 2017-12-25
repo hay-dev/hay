@@ -49,9 +49,10 @@ public class MemberController {
     	return memberService.getFollowings(id);
 	}
 
-    @PutMapping("/modify/{id}")
+    @PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
     public void modifyMember(@PathVariable int id, @RequestBody Member member) {
+    	member.setId(id);
     	memberService.modifyMember(member);
     }
 
