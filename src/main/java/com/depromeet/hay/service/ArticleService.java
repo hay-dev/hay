@@ -1,15 +1,18 @@
 package com.depromeet.hay.service;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.depromeet.hay.dao.ArticleDao;
 import com.depromeet.hay.domain.Article;
 import com.depromeet.hay.domain.Comment;
 import com.depromeet.hay.domain.Member;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
+@Transactional
 public class ArticleService {
 
     @Autowired

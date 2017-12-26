@@ -1,12 +1,26 @@
 package com.depromeet.hay.domain;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "member")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Member {
 
 	@Id
@@ -135,6 +149,10 @@ public class Member {
 	public void addFollowing(Member following) {
 		this.followings.add(following);
 	}
+	
+	public void removeFollowing(Member following) {
+		this.followings.remove(following);
+	}
 
 	public List<Member> getFollowers() {
 		return followers;
@@ -147,6 +165,10 @@ public class Member {
 	public void addFollower(Member follower) {
 		this.followers.add(follower);
 	}
+	
+	public void removeFollower(Member follower) {
+		this.followers.remove(follower);
+	}
 
 	public List<Article> getLikings() {
 		return likings;
@@ -156,8 +178,12 @@ public class Member {
 		this.likings = likings;
 	}
 
-	public void addLikings(Article liking) {
+	public void addLiking(Article liking) {
 		this.likings.add(liking);
+	}
+	
+	public void removeLiking(Article liking) {
+		this.likings.remove(liking);
 	}
 
 	public int getFollowingCnt() {
