@@ -13,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -31,7 +30,6 @@ public class Member {
 	@Column(nullable = false, length = 50)
 	private String email;
 
-	@Transient
 	@Column(nullable = false, length = 20)
 	private String password;
 
