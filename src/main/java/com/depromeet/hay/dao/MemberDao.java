@@ -26,6 +26,14 @@ public class MemberDao {
 	public Member getMember(int id) {
 		return entityManager.find(Member.class, id);
 	}
+
+	public Member getMember(String email) {
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Member> criteria = builder.createQuery(Member.class);
+		Root<Member> root = criteria.from(Member.class);
+		criteria.where(builder.equal(root.get("email"), email));
+		return entityManager.createQuery(criteria).getSingleResult();
+	}
 	
 	public List<Member> findMembers(String text) {
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();

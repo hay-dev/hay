@@ -1,8 +1,16 @@
 package com.depromeet.hay.service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,13 +22,26 @@ import com.depromeet.hay.domain.Member;
 
 @Service
 @Transactional
-public class MemberService {
+public class MemberService implements UserDetailsService {
 	
 	@Autowired
 	private MemberDao memberDao;
 	@Autowired
 	private ArticleDao articleDao;
-	
+
+	@Override
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		Member member = memberDao.getMember(email);
+
+		if (member == null) {
+			throw new UsernameNotFoundException("Email [" + email + "] is not found");
+		}
+
+		Set<GrantedAuthority> authorities = new HashSet<>();
+		authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+		return new User(String.valueOf(member.getId()), member.getPassword(), authorities);
+	}
+
 	public void signUp(Member member) {
 		memberDao.addMember(member);
 	}

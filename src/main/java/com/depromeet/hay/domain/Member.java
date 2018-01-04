@@ -31,7 +31,6 @@ public class Member {
 	@Column(nullable = false, length = 50)
 	private String email;
 
-	@Transient
 	@Column(nullable = false, length = 20)
 	private String password;
 
